@@ -9,22 +9,30 @@
 </head>
 
 <body>
-    <div class="game-container">
-        <canvas id="game"></canvas>
+    <section class="page">
+        <div class="game-container">
+            <canvas id="game"></canvas>
 
 
-        <div class="btns">
-            <button id="up"></button>
-            <button id="left"></button>
-            <button id="right"></button>
-            <button id="down"></button>
+            <div class="btns">
+                <button id="up"><img src="./icons/up_arrow_icon.svg" alt=""></button>
+                <button id="left"><img src="./icons/left_arrow_icon.svg" alt=""></button>
+                <button id="right"><img src="./icons/right_arrow_icon.svg" alt=""></button>
+                <button id="down"><img src="./icons/down_c_arrow_icon.svg" alt=""></button>
+            </div>
+
+            <div class="message">
+                <p>texto de ejemplo</p>
+            </div>
         </div>
 
-        <div class="message">
-            <p>texto de ejemplo</p>
-        </div>
-    </div>
+        <section class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+        </section>
 
+    </section>
 
     <script src="./maps.js"></script>
     <script src="./game.js"></script>
