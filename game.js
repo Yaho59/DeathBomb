@@ -11,6 +11,7 @@ const btnDown = document.querySelector('#down');
 var canvasSize;
 var elementsSize;
 let level = 0;
+let lives = 3;
 
 const playerPosition = {
     x: undefined,
@@ -100,7 +101,7 @@ function movePlayer() {
     });
 
     if (enemyCollision) {
-        console.log('Chocaste contra un enemigo :(');
+        lostGame();
     }
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
@@ -113,6 +114,21 @@ function levelWin() {
 
 function gameWin() {
     console.log("Terminasta el juego")
+}
+function lostGame() {
+    for (let i = 1; i <= lives; i++) {
+        playerPosition.x = undefined;
+        playerPosition.y = undefined;
+        lives--
+        break
+    }
+    if (lives == 0) {
+        level = 0
+        lives = 3
+        startGame();
+    }
+
+    startGame();
 }
 
 btnUp.addEventListener('click', moveUp);
