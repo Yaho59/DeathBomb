@@ -7,6 +7,7 @@ const btnUp = document.querySelector('#up');
 const btnLetf = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+const heart = document.querySelector('#lives')
 
 var canvasSize;
 var elementsSize;
@@ -56,6 +57,7 @@ function startGame() {
 
     const mapRows = map.trim().split('\n');
     const mapRowsCol = mapRows.map(row => row.trim().split(''));
+    showLives();
 
     enemyPosition = [];
     game.clearRect(0, 0, canvasSize, canvasSize);
@@ -120,6 +122,7 @@ function lostGame() {
         playerPosition.x = undefined;
         playerPosition.y = undefined;
         lives--
+
         break
     }
     if (lives == 0) {
@@ -127,8 +130,13 @@ function lostGame() {
         lives = 3
         startGame();
     }
-
+    ;
     startGame();
+}
+function showLives() {
+    const heartsArray = Array(lives).fill(emojis['HEART']);
+    heart.innerHTML = "";
+    heartsArray.forEach(hearts => heart.append(hearts));
 }
 
 btnUp.addEventListener('click', moveUp);
@@ -146,7 +154,6 @@ function moveByKey(event) {
 
 function moveUp() {
     if ((playerPosition.y - elementsSize) < elementsSize) {
-        console.log('out')
     } else {
         playerPosition.y -= elementsSize;
         startGame();
@@ -155,7 +162,6 @@ function moveUp() {
 
 function moveLeft() {
     if ((playerPosition.x - elementsSize) < elementsSize) {
-        console.log('out')
     } else {
         playerPosition.x -= elementsSize;
         startGame();
@@ -165,7 +171,6 @@ function moveLeft() {
 
 function moveRight() {
     if ((playerPosition.x + elementsSize) > canvasSize) {
-        console.log('out')
     } else {
         playerPosition.x += elementsSize;
         startGame();
@@ -173,8 +178,7 @@ function moveRight() {
 }
 
 function moveDown() {
-    if ((playerPosition.y + elementsSize) > canvasSize) {
-        console.log('out')
+    if ((playerPosition.y + elementsSize) > canvasSize) {   
     } else {
         playerPosition.y += elementsSize;
         startGame();
