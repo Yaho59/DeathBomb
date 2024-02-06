@@ -8,11 +8,19 @@ const btnLetf = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
 const heart = document.querySelector('#lives')
+const time = document.querySelector('#time')
+const record = document.querySelector('#record')
+const resulRecord = document.querySelector('#result')
 
-var canvasSize;
-var elementsSize;
+let canvasSize;
+let elementsSize;
+
 let level = 0;
 let lives = 3;
+
+let timeStart;
+let timePlayer;
+let timeInterval;
 
 const playerPosition = {
     x: undefined,
@@ -34,7 +42,7 @@ window.addEventListener('resize', setcanvasSize)
 
 function setcanvasSize() {
     canvasSize = window.innerWidth > window.innerHeight ?
-        window.innerHeight * 0.8 : window.innerWidth * 0.8;
+        window.innerHeight * 0.7 : window.innerWidth * 0.7;
     canvas.setAttribute('width', canvasSize);
     canvas.setAttribute('height', canvasSize);
 
@@ -53,6 +61,12 @@ function startGame() {
     if (!map) {
         gameWin();
         return;
+    }
+
+    if (!timeStart) {
+        timeStart = Date.now();
+        timeInterval = setInterval(showTime, 100);
+        showRecord();
     }
 
     const mapRows = map.trim().split('\n');
@@ -115,7 +129,23 @@ function levelWin() {
 }
 
 function gameWin() {
-    console.log("Terminasta el juego")
+    console.log("Terminasta el juego");
+    clearInterval(timeInterval);
+
+    const recordTime = localStorage.getItem("record_Time")
+    timePlayer = Date.now() - timeStart;
+
+    if (recordTime) {
+        if (recordTime >= timePlayer) {
+            localStorage.setItem('record_Time', timePlayer)
+            resulRecord.innerHTML = "Superaste el record";
+        }else{
+            resulRecord.innerHTML = "Sorry, you didn't break the record. ";
+        }
+    }else{
+        localStorage.setItem('record_Time', timePlayer)
+    }
+    console.log({recordTime, timePlayer})
 }
 function lostGame() {
     for (let i = 1; i <= lives; i++) {
@@ -128,15 +158,35 @@ function lostGame() {
     if (lives == 0) {
         level = 0
         lives = 3
+        timeStart = undefined;
         startGame();
     }
-    ;
     startGame();
 }
 function showLives() {
     const heartsArray = Array(lives).fill(emojis['HEART']);
     heart.innerHTML = "";
     heartsArray.forEach(hearts => heart.append(hearts));
+}
+
+function showTime() {
+    time.innerHTML = formatTime(Date.now()-timeStart);;
+}
+
+function formatTime(ms){
+    const cs = parseInt(ms/10) % 100
+    const seg = parseInt(ms/1000) % 60
+    const min = parseInt(ms/60000) % 60
+    const hrs = parseInt(ms/3600000) % 24
+    const csStr = `${cs}`.slice(-2)
+    const segStr = `${seg}`.slice(-2)
+    const minStr = `${min}`.slice(-2)
+    const hrsStr = `${hrs}`.slice(-2)
+    return`${hrsStr}:${minStr}:${segStr}:${csStr}`
+}
+
+function showRecord() {
+    record.innerHTML = localStorage.getItem("record_Time")
 }
 
 btnUp.addEventListener('click', moveUp);
@@ -178,7 +228,7 @@ function moveRight() {
 }
 
 function moveDown() {
-    if ((playerPosition.y + elementsSize) > canvasSize) {   
+    if ((playerPosition.y + elementsSize) > canvasSize) {
     } else {
         playerPosition.y += elementsSize;
         startGame();
