@@ -37,16 +37,38 @@ const bombPosition = {
 }
 let enemyPosition = []
 
+function fixNumber(n) {
+    return Number(n.toFixed(0));
+}
+
 window.addEventListener('load', setcanvasSize);
 window.addEventListener('resize', setcanvasSize)
 
 function setcanvasSize() {
-    canvasSize = window.innerWidth > window.innerHeight ?
-        window.innerHeight * 0.7 : window.innerWidth * 0.7;
+    windowHeight = window.innerHeight * 0.7;
+    windowWidth = window.innerWidth * 0.7;
+
+    if (window.innerHeight > window.innerWidth) {
+        if ((windowWidth % 10) !== 0) {
+            canvasSize = Math.ceil(windowWidth / 10) * 10;
+        } else {
+            canvasSize = windowWidth;
+        }
+    }
+    else {
+        if ((windowHeight % 10) !== 0) {
+            canvasSize = Math.ceil(windowHeight / 10) * 10;
+        } else {
+            canvasSize = windowHeight;
+        }
+    }
+
     canvas.setAttribute('width', canvasSize);
     canvas.setAttribute('height', canvasSize);
+    elementsSize = (canvasSize / 10);
 
-    elementsSize = (canvasSize / 10) - 1;
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
 
     startGame()
 }
@@ -78,8 +100,10 @@ function startGame() {
     mapRowsCol.forEach((row, rowI) => {
         row.forEach((col, colI) => {
             const emoji = emojis[col];
-            const posX = elementsSize * (colI + 1) + 13;
+            const posX = elementsSize * (colI + 1);
             const posY = elementsSize * (rowI + 1);
+            fixNumber(posX)
+            fixNumber(posY)
 
             if (col == 'O') {
                 if (!playerPosition.x && !playerPosition.y) {
@@ -90,10 +114,11 @@ function startGame() {
             } else if (col == 'I') {
                 gitPosition.x = posX;
                 gitPosition.y = posY;
+
             } else if (col == 'X') {
                 enemyPosition.push({
-                    x: posX,
-                    y: posY
+                    x: fixNumber(posX),
+                    y: fixNumber(posY)
                 })
             }
             game.fillText(emoji, posX, posY);
@@ -103,16 +128,16 @@ function startGame() {
 }
 
 function movePlayer() {
-    const gitCollisionX = playerPosition.x.toFixed(3) == gitPosition.x.toFixed(3);
-    const gitCollisionY = playerPosition.y.toFixed(3) == gitPosition.y.toFixed(3);
+    const gitCollisionX = playerPosition.x.toFixed(0) == gitPosition.x.toFixed(0);
+    const gitCollisionY = playerPosition.y.toFixed(0) == gitPosition.y.toFixed(0);
     const gitCollosion = gitCollisionX && gitCollisionY;
     if (gitCollosion) {
         levelWin();
     }
 
     const enemyCollision = enemyPosition.find(enemy => {
-        const enemyCollisionX = enemy.x.toFixed(3) == playerPosition.x.toFixed(3);
-        const enemyCollisionY = enemy.y.toFixed(3) == playerPosition.y.toFixed(3);
+        const enemyCollisionX = enemy.x.toFixed(0) == playerPosition.x.toFixed(0);
+        const enemyCollisionY = enemy.y.toFixed(0) == playerPosition.y.toFixed(0);
         return enemyCollisionX && enemyCollisionY;
     });
 
@@ -139,13 +164,13 @@ function gameWin() {
         if (recordTime >= timePlayer) {
             localStorage.setItem('record_Time', timePlayer)
             resulRecord.innerHTML = "Superaste el record";
-        }else{
+        } else {
             resulRecord.innerHTML = "Sorry, you didn't break the record. ";
         }
-    }else{
+    } else {
         localStorage.setItem('record_Time', timePlayer)
     }
-    console.log({recordTime, timePlayer})
+    console.log({ recordTime, timePlayer })
 }
 function lostGame() {
     for (let i = 1; i <= lives; i++) {
@@ -170,19 +195,19 @@ function showLives() {
 }
 
 function showTime() {
-    time.innerHTML = formatTime(Date.now()-timeStart);;
+    time.innerHTML = formatTime(Date.now() - timeStart);;
 }
 
-function formatTime(ms){
-    const cs = parseInt(ms/10) % 100
-    const seg = parseInt(ms/1000) % 60
-    const min = parseInt(ms/60000) % 60
-    const hrs = parseInt(ms/3600000) % 24
+function formatTime(ms) {
+    const cs = parseInt(ms / 10) % 100
+    const seg = parseInt(ms / 1000) % 60
+    const min = parseInt(ms / 60000) % 60
+    const hrs = parseInt(ms / 3600000) % 24
     const csStr = `${cs}`.slice(-2)
     const segStr = `${seg}`.slice(-2)
     const minStr = `${min}`.slice(-2)
     const hrsStr = `${hrs}`.slice(-2)
-    return`${hrsStr}:${minStr}:${segStr}:${csStr}`
+    return `${hrsStr}:${minStr}:${segStr}:${csStr}`
 }
 
 function showRecord() {
@@ -204,8 +229,11 @@ function moveByKey(event) {
 
 function moveUp() {
     if ((playerPosition.y - elementsSize) < elementsSize) {
+        console.log('out')
     } else {
         playerPosition.y -= elementsSize;
+
+
         startGame();
     }
 }
