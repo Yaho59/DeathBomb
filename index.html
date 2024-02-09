@@ -13,20 +13,23 @@
         <div class="game-container">
             <canvas id="game"></canvas>
 
-
-            <div class="btns">
-                <button id="up"><img src="./icons/up_arrow_icon.svg" alt=""></button>
-                <button id="left"><img src="./icons/left_arrow_icon.svg" alt=""></button>
-                <button id="right"><img src="./icons/right_arrow_icon.svg" alt=""></button>
-                <button id="down"><img src="./icons/down_c_arrow_icon.svg" alt=""></button>
+            <div class="controls-container">
+                <div class="btns">
+                    <button id="up"><img src="./icons/up_arrow_icon.svg" alt=""></button>
+                    <button id="left"><img src="./icons/left_arrow_icon.svg" alt=""></button>
+                    <button id="right"><img src="./icons/right_arrow_icon.svg" alt=""></button>
+                    <button id="down"><img src="./icons/down_c_arrow_icon.svg" alt=""></button>
+                    <button id="restart"><img src="./icons/restart_icon.svg" alt=""></button>
+                    <button id="pause"><img src="./icons/pause_icon.svg" alt=""></button>
+                </div>
+                <div class="message">
+                    <p>Vidas: <span id="lives"></span></p>
+                    <p>Tiempo ⏰: <span id="time"></span></p>
+                    <p>Record 🏁: <span id="record"></span></p>
+                    <p id="result"></p>
+                </div>
             </div>
 
-            <div class="message">
-                <p>Vidas: <span id="lives"></span></p>
-                <p>Tiempo⏰: <span id="time"></span></p>
-                <p>Record🏁: <span id="record"></span></p>
-                <p id="result"></p>
-            </div>
         </div>
 
         <section class="loader">

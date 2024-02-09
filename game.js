@@ -7,6 +7,7 @@ const btnUp = document.querySelector('#up');
 const btnLetf = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+const btnRestart = document.querySelector('#restart');
 const heart = document.querySelector('#lives')
 const time = document.querySelector('#time')
 const record = document.querySelector('#record')
@@ -43,6 +44,7 @@ function fixNumber(n) {
 
 window.addEventListener('load', setcanvasSize);
 window.addEventListener('resize', setcanvasSize)
+btnRestart.addEventListener('click', reload)
 
 function setcanvasSize() {
     windowHeight = window.innerHeight * 0.7;
@@ -195,23 +197,27 @@ function showLives() {
 }
 
 function showTime() {
-    time.innerHTML = formatTime(Date.now() - timeStart);;
+    time.innerHTML = Date.now() - timeStart;
 }
 
-function formatTime(ms) {
-    const cs = parseInt(ms / 10) % 100
-    const seg = parseInt(ms / 1000) % 60
-    const min = parseInt(ms / 60000) % 60
-    const hrs = parseInt(ms / 3600000) % 24
-    const csStr = `${cs}`.slice(-2)
-    const segStr = `${seg}`.slice(-2)
-    const minStr = `${min}`.slice(-2)
-    const hrsStr = `${hrs}`.slice(-2)
-    return `${hrsStr}:${minStr}:${segStr}:${csStr}`
-}
+// function formatTime(ms) {
+//     const cs = parseInt(ms / 10) % 100
+//     const seg = parseInt(ms / 1000) % 60
+//     const min = parseInt(ms / 60000) % 60
+//     const hrs = parseInt(ms / 3600000) % 24
+//     const csStr = `${cs}`.slice(-2)
+//     const segStr = `${seg}`.slice(-2)
+//     const minStr = `${min}`.slice(-2)
+//     const hrsStr = `${hrs}`.slice(-2)
+//     return `${hrsStr}:${minStr}:${segStr}:${csStr}`
+// }
 
 function showRecord() {
     record.innerHTML = localStorage.getItem("record_Time")
+}
+
+function reload() {
+    location.reload();
 }
 
 btnUp.addEventListener('click', moveUp);
