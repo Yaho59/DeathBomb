@@ -1,13 +1,20 @@
 body {
     font-size: 62.5%;
-    background-color: #D9BEA7;
+    background-image: linear-gradient(180deg, #ffe1aa 0, #ffd4a7 16.67%, #ffc7a2 33.33%, #f2b99d 50%, #e1ac97 66.67%, #d1a092 83.33%, #c2968d 100%);
     color: #fff;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
     padding: 0;
 }
 
+.inactive {
+    display: none !important;
+}
+
 .page {
+    display: grid;
+    place-items: center;
+    /* justify-content: center; */
     position: relative;
     height: 100vh;
     width: 100%;
@@ -48,32 +55,32 @@ button {
 }
 
 #up {
-    right: 40px;
+    right: 13px;
 }
 
 #left {
     top: 60px;
-    left: 22px;
+    left: 33px;
 }
 
 #right {
     top: 60px;
-    right: -40px;
+    right: -68px;
 }
 
 #down {
-    right: 40px;
+    right: 13px;
     bottom: -175px;
 }
 
 #restart {
     top: 150px;
-    right: -50px;
+    right: -68px;
 }
 
 #pause {
     top: 150px;
-    left: 20px;
+    left: 33px;
 }
 
 button img {
@@ -97,9 +104,16 @@ p {
     display: block;
     margin: 0;
     width: 100%;
-    color: #BF9A2A;
+    color: white;
     font-size: 1.2rem;
     font-weight: 600;
+}
+
+.emblem {
+    background-image: linear-gradient(130deg, #fffff6 0, #fffbe1 16.67%,
+     #faedcc 33.33%, #f2deb5 50%, #ebcf9f 66.67%, #e6c08c 83.33%, #e2b17a 100%);
+    z-index: 2;
+    color: black;
 }
 
 
@@ -172,18 +186,13 @@ p {
 
 @media (max-width: 769px) {
 
-    .game-container{
+    .game-container {
         flex-direction: column;
     }
+
     button {
         margin-top: 25px;
     }
-
-    /* #up,
-    #down {
-        margin-left: 90%;
-        margin-right: 90%;
-    } */
 
     .loader {
         background-image: linear-gradient(#00000080, #00000080), url('./poster-movil.jpg');

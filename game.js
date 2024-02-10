@@ -11,7 +11,9 @@ const btnRestart = document.querySelector('#restart');
 const heart = document.querySelector('#lives')
 const time = document.querySelector('#time')
 const record = document.querySelector('#record')
-const resulRecord = document.querySelector('#result')
+// const resulRecord = document.querySelector('#result')
+const divEmblem = document.querySelector('.emblem')
+
 
 let canvasSize;
 let elementsSize;
@@ -156,11 +158,14 @@ function levelWin() {
 }
 
 function gameWin() {
-    console.log("Terminasta el juego");
     clearInterval(timeInterval);
-
+    styles()
     const recordTime = localStorage.getItem("record_Time")
     timePlayer = Date.now() - timeStart;
+
+    const resulRecord = document.createElement('p');
+    resulRecord.style.color = "black";
+
 
     if (recordTime) {
         if (recordTime >= timePlayer) {
@@ -168,11 +173,13 @@ function gameWin() {
             resulRecord.innerHTML = "Superaste el record";
         } else {
             resulRecord.innerHTML = "Sorry, you didn't break the record. ";
+            localStorage.removeItem("record_Time");
         }
     } else {
         localStorage.setItem('record_Time', timePlayer)
     }
-    console.log({ recordTime, timePlayer })
+    divEmblem.append(resulRecord)
+    
 }
 function lostGame() {
     for (let i = 1; i <= lives; i++) {
@@ -218,6 +225,43 @@ function showRecord() {
 
 function reload() {
     location.reload();
+}
+
+function styles() {
+    document.querySelector('.game-container').style.opacity = "0.5";
+
+    var styles = {
+        "padding": "10px",
+        "display": "flex",
+        "flex-direction": "column",
+        "gap": "10px",
+        'width':'380px',
+        'height': '300px'
+
+    };
+    Object.assign(divEmblem.style, styles);
+
+    const icon = document.createElement('img');
+    icon.setAttribute('src', './icons/x_icon.svg');
+    icon.setAttribute('width', '24');
+    icon.setAttribute('height', '24');
+
+    icon.addEventListener('click', disguise)
+    function disguise() {
+        divEmblem.classList.add('inactive')
+        document.querySelector('.game-container').style.opacity = "1";
+    }
+
+    const trophy = document.createElement('img');
+    trophy.setAttribute('src', './icons/trophy.svg');
+    trophy.setAttribute('width', '100');
+    trophy.setAttribute('height', '100');
+    trophy.style.alignSelf = 'center'
+
+    const text = document.createElement('p');
+    text.innerHTML = "FELICIDADES TERMINASTE EL JUEGO"
+    text.style.color = "black"
+    divEmblem.append( icon,text ,trophy);
 }
 
 btnUp.addEventListener('click', moveUp);
