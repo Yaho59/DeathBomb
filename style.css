@@ -60,7 +60,7 @@ button {
 
 #left {
     top: 60px;
-    left: 33px;
+    left: 22px;
 }
 
 #right {
@@ -80,7 +80,7 @@ button {
 
 #pause {
     top: 150px;
-    left: 33px;
+    left: 22px;
 }
 
 button img {
@@ -111,7 +111,7 @@ p {
 
 .emblem {
     background-image: linear-gradient(130deg, #fffff6 0, #fffbe1 16.67%,
-     #faedcc 33.33%, #f2deb5 50%, #ebcf9f 66.67%, #e6c08c 83.33%, #e2b17a 100%);
+            #faedcc 33.33%, #f2deb5 50%, #ebcf9f 66.67%, #e6c08c 83.33%, #e2b17a 100%);
     z-index: 2;
     color: black;
 }
@@ -123,7 +123,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(#00000080, #00000080), url('./Poster.jpg');
+    background-image: linear-gradient(#00000080, #00000080), url('https://firebasestorage.googleapis.com/v0/b/travel-8ec65.appspot.com/o/Poster.jpg?alt=media&token=aa9b37fa-689d-4e76-bf45-ffedf60b7371');
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
@@ -195,7 +195,7 @@ p {
     }
 
     .loader {
-        background-image: linear-gradient(#00000080, #00000080), url('./poster-movil.jpg');
+        background-image: linear-gradient(#00000080, #00000080), url('.https://firebasestorage.googleapis.com/v0/b/travel-8ec65.appspot.com/o/poster-movil.jpg?alt=media&token=3a550ccf-bb4b-41d7-8d3a-b0258aa5335b');
         background-size: 100% 100%;
     }
 }
