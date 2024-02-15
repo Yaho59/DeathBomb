@@ -14,7 +14,6 @@ body {
 .page {
     display: grid;
     place-items: center;
-    /* justify-content: center; */
     position: relative;
     height: 100vh;
     width: 100%;
@@ -35,15 +34,22 @@ canvas {
     background-color: #232935;
 }
 
+.controls-container{
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    gap: 15px;
+}
+
 .btns {
-    position: relative;
-    /* display: flex;
-    justify-content: center; */
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    max-width: 360px;
 }
 
 button {
-    position: absolute;
     background-color: #BF2424;
     border-radius: 8px;
     border-color: #8C1C1C;
@@ -52,35 +58,6 @@ button {
     width: 72px;
     max-width: 72px;
     height: 60px;
-}
-
-#up {
-    right: 13px;
-}
-
-#left {
-    top: 60px;
-    left: 22px;
-}
-
-#right {
-    top: 60px;
-    right: -68px;
-}
-
-#down {
-    right: 13px;
-    bottom: -175px;
-}
-
-#restart {
-    top: 150px;
-    right: -68px;
-}
-
-#pause {
-    top: 150px;
-    left: 22px;
 }
 
 button img {
@@ -93,9 +70,6 @@ button:not(:last-child) {
 }
 
 .message {
-    position: relative;
-    bottom: -245px;
-    left: 22px;
 
 }
 
