@@ -7,6 +7,7 @@ const btnUp = document.querySelector('#up');
 const btnLetf = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+const btnPause = document.querySelector('#pause')
 const btnRestart = document.querySelector('#restart');
 const heart = document.querySelector('#lives')
 const time = document.querySelector('#time')
@@ -24,6 +25,7 @@ let lives = 3;
 let timeStart;
 let timePlayer;
 let timeInterval;
+let off = false;
 
 const playerPosition = {
     x: undefined,
@@ -47,6 +49,7 @@ function fixNumber(n) {
 window.addEventListener('load', setcanvasSize);
 window.addEventListener('resize', setcanvasSize)
 btnRestart.addEventListener('click', reload)
+btnPause.addEventListener('click', pause)
 
 function setcanvasSize() {
     windowHeight = window.innerHeight * 0.7;
@@ -179,7 +182,7 @@ function gameWin() {
         localStorage.setItem('record_Time', timePlayer)
     }
     divEmblem.append(resulRecord)
-    
+
 }
 function lostGame() {
     for (let i = 1; i <= lives; i++) {
@@ -204,20 +207,20 @@ function showLives() {
 }
 
 function showTime() {
-    time.innerHTML = Date.now() - timeStart;
+    if (timeInterval !== null) {
+        time.innerHTML = formatTime(Date.now() - timeStart);
+    }
 }
 
-// function formatTime(ms) {
-//     const cs = parseInt(ms / 10) % 100
-//     const seg = parseInt(ms / 1000) % 60
-//     const min = parseInt(ms / 60000) % 60
-//     const hrs = parseInt(ms / 3600000) % 24
-//     const csStr = `${cs}`.slice(-2)
-//     const segStr = `${seg}`.slice(-2)
-//     const minStr = `${min}`.slice(-2)
-//     const hrsStr = `${hrs}`.slice(-2)
-//     return `${hrsStr}:${minStr}:${segStr}:${csStr}`
-// }
+function formatTime(ms) {
+    const seg = parseInt(ms / 1000) % 60
+    const min = parseInt(ms / 60000) % 60
+    const hrs = parseInt(ms / 3600000) % 24
+    const segStr = `${seg}`.slice(-2)
+    const minStr = `${min}`.slice(-2)
+    const hrsStr = `${hrs}`.slice(-2)
+    return `${hrsStr}:${minStr}:${segStr}`
+}
 
 function showRecord() {
     record.innerHTML = localStorage.getItem("record_Time")
@@ -225,6 +228,16 @@ function showRecord() {
 
 function reload() {
     location.reload();
+}
+function pause() {
+    if (timeInterval) {
+        clearInterval(timeInterval);
+        timeInterval = null;
+        timePlayer = Date.now() - timeStart; // Guardar el tiempo transcurrido
+    } else {
+        timeStart = Date.now() - timePlayer; // Ajustar el tiempo al reanudar
+        timeInterval = setInterval(showTime, 100);
+    }
 }
 
 function styles() {
@@ -235,7 +248,7 @@ function styles() {
         "display": "flex",
         "flex-direction": "column",
         "gap": "10px",
-        'width':'380px',
+        'width': '380px',
         'height': '300px'
 
     };
@@ -261,7 +274,7 @@ function styles() {
     const text = document.createElement('p');
     text.innerHTML = "FELICIDADES TERMINASTE EL JUEGO"
     text.style.color = "black"
-    divEmblem.append( icon,text ,trophy);
+    divEmblem.append(icon, text, trophy);
 }
 
 btnUp.addEventListener('click', moveUp);
